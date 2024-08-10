@@ -1,35 +1,34 @@
 package app;
 
-public class Aluno extends PessoaFisica {
+public class Aluno extends PessoaFisica{
 
-    private String matricula, curso;
+	String matricula, 
+	       curso;
+	
+	public Aluno(String nome, String cpf, String email, String matricula, String curso) {
+		super(nome, cpf, email);
+		this.matricula = matricula;
+		this.curso = curso;
+	}
 
-    public String getCurso() {
-        return curso;
-    }
+	public final String getMatricula() {
+		return matricula;
+	}
 
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public String toString() {
-
-        return "Nome: " + getNome() + ", CPF: " + getCpf() + ", Email: " + getEmail() + ", Matricula: " + matricula
-                + ", Curso: " + curso + "\n";
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        // TODO Auto-generated method stub
-        super.finalize();
-    }
+	public final String getCurso() {
+		return curso;
+	}
+	
+	
+	protected void finalize() throws Throwable {
+		System.out.println("Destruindo objeto: " + this);
+	}
+	
+	public String toString() {
+		String resposta = super.toString();
+		resposta += "MATRICULA: " + matricula + '\n';
+		resposta += "CURSO: " + curso + '\n';
+		return resposta;
+	}
 
 }
