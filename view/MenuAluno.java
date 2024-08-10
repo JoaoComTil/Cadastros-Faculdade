@@ -1,90 +1,91 @@
 package view;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
-import Cadastros.CadastroAlunos;
 import app.Aluno;
+import cadastros.CadastroAluno;
 
-/*
- * Classe usada para manipular as funções de CadastroAlunos
-*/
 public class MenuAluno {
 
-    public void menuAluno(CadastroAlunos cadAluno) {
+	public static Aluno dadosNovoAluno() {
+		String nome = lerNome();
+		String cpf = lerCPF();
+		String email = lerEmail();
+		String matricula = lerMatricula(); 
+		String curso = lerCurso();
+		return new Aluno(nome, cpf, email, matricula, curso);
+	}
 
-        Scanner scanner = new Scanner(System.in);
+	private static String lerCurso() {
+		return JOptionPane.showInputDialog("Informe o curso do aluno: ");
+	}
 
-        System.out.println("Menu Aluno");
-        System.out.println("1. Cadastrar Aluno");
-        System.out.println("2. Pesquisar Aluno");
-        System.out.println("3. Remover Aluno");
-        System.out.println("4. Atualizar Aluno");
-        System.out.println("0. Sair");
+	private static String lerEmail() {
+		return JOptionPane.showInputDialog("Informe o email do aluno: ");
+	}
 
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
+	private static String lerCPF() {
+		return JOptionPane.showInputDialog("Informe o CPF do aluno: ");
+	}
 
-        switch (opcao) {
-            case 1:
-                Aluno novoAluno = dadosNovoAluno();
-                cadAluno.cadastrarAluno(novoAluno);
-                break;
+	private static String lerNome() {
+		return JOptionPane.showInputDialog("Informe o nome do aluno: ");
+	}
 
-            case 2:
-                System.out.print("Digite a matrícula do aluno: ");
-                String matricula = scanner.nextLine();
-                Aluno alunoCadastrado = cadAluno.pesquisarAluno(matricula);
-                System.out.println(alunoCadastrado);
-                break;
+	private static String lerMatricula() {
+		return JOptionPane.showInputDialog("Informe a matricula do aluno: ");
+	}
 
-            case 3:
-                System.out.print("Digite a matrícula do aluno a remover: ");
-                matricula = scanner.nextLine();
-                Aluno alunoRemover = cadAluno.pesquisarAluno(matricula);
-                if (alunoRemover == null) {
-                    break;
-                }
-                cadAluno.removerAluno(alunoRemover, matricula);
-                break;
-            case 4:
+	public static void menuAluno(CadastroAluno cadAluno) {
+		String txt = "Informe a opção desejada \n"
+				+ "1 - Cadastrar aluno\n"
+				+ "2 - Pesquisar aluno\n"
+				+ "3 - Atualizar aluno\n"
+				+ "4 - Remover aluno\n"
+				+ "0 - Voltar para menu anterior";
+		
+		int opcao=-1;
+		do {
+			String strOpcao = JOptionPane.showInputDialog(txt);
+			opcao = Integer.parseInt(strOpcao);
 
-                System.out.print("Digite a matrícula do aluno a atualizar: ");
-                matricula = scanner.nextLine();
-                Aluno alunoAtualizado = dadosNovoAluno();
-                cadAluno.atualizarAluno(matricula, alunoAtualizado);
-                break;
+			switch (opcao) {
+			case 1:
+				Aluno novoAluno = dadosNovoAluno();
+				cadAluno.cadastrarAluno(novoAluno);
+				break;
+				
+			case 2: 
+				String matricula = lerMatricula();
+				Aluno a = cadAluno.pesquisarAluno(matricula);
+				if (a != null)
+					JOptionPane.showMessageDialog(null, a.toString());
+				break;
+				
+			case 3: 
+				matricula = lerMatricula(); 
+				Aluno novoCadastro = dadosNovoAluno();
+				boolean atualizado = cadAluno.atualizarAluno(matricula, novoCadastro);
+				if (atualizado) {
+					JOptionPane.showMessageDialog(null, "Cadastro atualizado.");
+				}
+				break;
+				
+			case 4: 
+				matricula = lerMatricula();
+				Aluno remover = cadAluno.pesquisarAluno(matricula);
+				boolean removido = cadAluno.removerAluno(remover);
+				if (removido) {
+					JOptionPane.showMessageDialog(null, "Aluno removido do cadastro");
+					System.gc();
+				}
 
-            case 0:
-                System.out.println("Saindo do menu...");
-                break;
-            default:
-                System.out.println("Opção inválida.");
-        }
+			default:
+				break;
+			}
+		} while (opcao != 0);
+		return;
+	}
 
-    }
-
-    public Aluno dadosNovoAluno() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Nome: ");
-        String nome = scanner.nextLine();
-        System.out.print("CPF: ");
-        String cpf = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Matrícula: ");
-        String matricula = scanner.nextLine();
-        System.out.print("Curso: ");
-        String curso = scanner.nextLine();
-
-        Aluno aluno = new Aluno();
-        aluno.setNome(nome);
-        aluno.setCpf(cpf);
-        aluno.setEmail(email);
-        aluno.setMatricula(matricula);
-        aluno.setCurso(curso);
-
-        return aluno;
-    }
 
 }
