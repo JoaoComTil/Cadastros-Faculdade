@@ -14,6 +14,7 @@ Prof. André Luiz Peron Martins Lanna
 
 Membros:
 João Gabriel Milhomem de Brito - 221022005
+Gabriel Severiano de Souza - 231012209
 ----------------------------------------------------------
 
 O seguinte programa foi criado como trabalho para exercitar os conceitos de programação orientada a objeto, exercitando tanto nos seus fundamentos, quanto no tratamento de exceções de java. Tem o intuito de realizar todas as operações tipicas que você veria em um programa de cadastro de faculdade como adicionar, pesquisar, remover e alterar entidades.
